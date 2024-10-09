@@ -1,11 +1,7 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 
-	/**
-	 * @param {string} page
-	 * @returns {void}
-	 */
-	function redirectPage(page) {
+	function redirectPage(page: string): void {
 		goto(`/${page}`);
 	}
 </script>
