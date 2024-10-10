@@ -6,14 +6,16 @@
 	let activeTaskTab = 'completed';
 
 	function handleSubmit(): void {
-		toDo.add({
-			id: Math.floor(Math.random() * 1000) + 1,
-			name: task,
-			isCompleted: false,
-			isDeleted: false
-		});
+		if (task != '') {
+			toDo.add({
+				id: Math.floor(Math.random() * 1000) + 1,
+				name: task,
+				isCompleted: false,
+				isDeleted: false
+			});
 
-		task = '';
+			task = '';
+		}
 	}
 
 	function handleComplete(task: ToDoType) {
@@ -50,22 +52,26 @@
 		</div>
 	</div>
 
-	<div class="border border-red-700 p-2">
-		<div>
-			<button on:click={() => (activeTaskTab = 'completed')}>Completed tasks</button>
-			<button on:click={() => (activeTaskTab = 'deleted')}>Deleted tasks</button>
-		</div>
+	<div>
+		<div class="border border-red-700 p-2">
+			<button class="border border-pink-700 p-3" on:click={() => (activeTaskTab = 'completed')}
+				>Completed tasks</button
+			>
+			<button class="border border-pink-700 p-3" on:click={() => (activeTaskTab = 'deleted')}
+				>Deleted tasks</button
+			>
 
-		<div>
-			{#each $toDo as task}
-				{#if task.isCompleted == true && activeTaskTab == 'completed'}
-					<div>{task.name}</div>
-				{/if}
+			<div>
+				{#each $toDo as task}
+					{#if task.isCompleted == true && activeTaskTab == 'completed'}
+						<div>{task.name}</div>
+					{/if}
 
-				{#if task.isDeleted == true && activeTaskTab == 'deleted'}
-					<div>{task.name}</div>
-				{/if}
-			{/each}
+					{#if task.isDeleted == true && activeTaskTab == 'deleted'}
+						<div>{task.name}</div>
+					{/if}
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
