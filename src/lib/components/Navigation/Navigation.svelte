@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+
+	let activePage: string = $page.url.pathname;
 
 	function redirectPage(page: string): void {
 		goto(`/${page}`);
@@ -9,9 +12,17 @@
 <div class="p-3 flex flex-col justify-center">
 	<p class="text-center mb-2">WELCOME to learning-svelte. You can go to any of these pages:</p>
 	<div class="flex justify-center gap-3">
-		<button class="border border-red-950 p-3" on:click={() => redirectPage('todos')}>To Do</button>
-		<button class="border border-red-950 p-3" on:click={() => redirectPage('pictures')}
-			>Pictures</button
+		<button
+			class={`border border-red-950 p-3 ${activePage == '/' ? 'bg-orange-200' : ''}`}
+			on:click={() => redirectPage('')}>Home</button
+		>
+		<button
+			class={`border border-red-950 p-3 ${activePage == '/todos' ? 'bg-orange-200' : ''}`}
+			on:click={() => redirectPage('todos')}>To Do (using stores)</button
+		>
+		<button
+			class={`border border-red-950 p-3 ${activePage == '/pictures' ? 'bg-orange-200' : ''}`}
+			on:click={() => redirectPage('pictures')}>Pictures</button
 		>
 	</div>
 </div>
