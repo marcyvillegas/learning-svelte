@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	let activePage: string = $page.url.pathname;
+	$: activePage = $page.url.pathname;
 
 	function redirectPage(page: string): void {
 		goto(`/${page}`);
@@ -10,6 +10,7 @@
 </script>
 
 <div class="p-3 flex flex-col justify-center">
+	<!-- {@debug activePage} -->
 	<p class="text-center mb-2">WELCOME to learning-svelte. You can go to any of these pages:</p>
 	<div class="flex justify-center gap-3">
 		<button
