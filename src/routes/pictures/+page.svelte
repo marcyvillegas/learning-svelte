@@ -1,5 +1,8 @@
 <script lang="ts">
-	export let data; // The data returned from the universal load function
+	import type { PageData } from './$types.js';
+	export let data: PageData; // The data returned from the universal load function
+
+	data.pictures = data.pictures.slice(0, 3)
 </script>
 
 <div class="flex justify-center items-center flex-col">

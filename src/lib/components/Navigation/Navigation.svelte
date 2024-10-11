@@ -25,5 +25,9 @@
 			class={`border border-red-950 p-3 ${activePage == '/pictures' ? 'bg-orange-200' : ''}`}
 			on:click={() => redirectPage('pictures')}>Pictures (using Universal Load Function)</button
 		>
+		<button
+			class={`border border-red-950 p-3 ${activePage == '/posts' ? 'bg-orange-200' : ''}`}
+			on:click={() => redirectPage('posts')}>Posts (GET and POST using actions)</button
+		>
 	</div>
 </div>
