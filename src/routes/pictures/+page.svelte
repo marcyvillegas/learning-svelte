@@ -2,11 +2,12 @@
 	import type { PageData } from './$types.js';
 	export let data: PageData; // The data returned from the universal load function
 
-	data.pictures = data.pictures.slice(0, 3)
+	data.pictures = data.pictures.slice(0, 3);
 </script>
 
+<!-- When fetching data, imported components outside of /routes will not render -->
 <div class="flex justify-center items-center flex-col">
-	<!-- After completely loading the page then display data? -->
+	<!-- After completely loading the page then display data -->
 	{#each data.pictures as picture}
 		<img src={picture.url} alt={picture.title} width="100px" />
 	{/each}

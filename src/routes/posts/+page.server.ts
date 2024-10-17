@@ -1,3 +1,4 @@
+import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types.js';
 
 export const actions = {
@@ -8,11 +9,11 @@ export const actions = {
 	// 	// TODO log the user in
 	// },
 
-	// Create post
+	// POST
 	createPost: async ({ request }) => {
 		const data = await request.formData();
 
-		fetch('https://jsonplaceholder.typicode.com/posts', {
+		const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
 			method: 'POST',
 			body: JSON.stringify({
 				title: data.get('title'),
@@ -24,10 +25,28 @@ export const actions = {
 			}
 		});
 
-		return { success: true };
+		console.log('response: ', response.status);
+
+		/**
+		 *
+		 * Retuns these 👇 if there is no enhancement in the client side
+		 */
+		// if (response.status != 201) {
+		// 	return fail(400, {
+		// 		error: 'ERROR'
+		// 	});
+		// }
+		// return {
+		// 	success: true
+		// };
+
+		// GET
+		// getPosts: async () => {
+
+		// }
+
+		// Delete post
+
+		// Edit post
 	}
-
-	// Delete post
-
-	// Edit post
 } satisfies Actions;

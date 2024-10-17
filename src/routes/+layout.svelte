@@ -6,7 +6,7 @@
 
 	const pendingStore = writable<boolean>(false);
 
-	$: if ($navigating) pendingStore.set(true);
+	$: if ($navigating) pendingStore.set(true); // <- is navigating?
 	$: if (!$navigating) pendingStore.set(false);
 </script>
 

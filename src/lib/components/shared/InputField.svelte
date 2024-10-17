@@ -6,5 +6,5 @@
 
 <label>
 	{label}
-	<input {type} {name} autocomplete="off" />
+	<input class="border border-blue-800 p-2" {type} {name} autocomplete="off" />
 </label>
