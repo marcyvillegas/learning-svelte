@@ -1,6 +1,20 @@
-import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types.js';
 
+// LOAD
+export const load = async ({ fetch }) => {
+	// Fetch data from a public API, accessible by both the server and client
+	const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+	const posts = await response.json();
+
+	console.info('REFETCHED');
+
+	// Return the fetched data
+	return {
+		posts: posts.slice(0, 3)
+	};
+};
+
+// ACTION
 export const actions = {
 	/**
 	 *  Default action 👇

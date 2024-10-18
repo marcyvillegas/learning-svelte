@@ -27,7 +27,8 @@
 		>
 		<button
 			class={`border border-red-950 p-3 ${activePage == '/posts' ? 'bg-orange-200' : ''}`}
-			on:click={() => redirectPage('posts')}>Posts (GET and POST using actions)</button
+			on:click={() => redirectPage('posts')}
+			>Posts (GET and POST using actions and enhancement)</button
 		>
 	</div>
 </div>

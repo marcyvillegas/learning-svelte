@@ -3,7 +3,9 @@
 	import type { ActionData } from './$types.js';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { PageData } from './$types.js';
 
+	export let data: PageData; // The data returned from the universal load function
 	export let form: ActionData;
 
 	// state
@@ -77,7 +79,19 @@
 	</div>
 
 	<!-- GET -->
-	<div class="flex justify-center">
-		<div></div>
+	<div>
+		<div class="flex justify-center mt-5">GET ALL POSTS (5 only)</div>
+
+		<div class="flex justify-center mt-5 flex-col items-center">
+			<!-- After completely loading the page then display data -->
+			{#each data.posts as post}
+				<div class="p-2 border border-red-950 m-5">
+					<div>{post.title}</div>
+					<div>{post.body}</div>
+					<button class="p-2 border border-purple-700">EDIT</button>
+					<button class="p-2 border border-purple-700">DELETE</button>
+				</div>
+			{/each}
+		</div>
 	</div>
 </div>
