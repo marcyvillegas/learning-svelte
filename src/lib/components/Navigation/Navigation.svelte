@@ -15,7 +15,7 @@
 	<div class="flex justify-center gap-3">
 		<button
 			class={`border border-red-950 p-3 ${activePage == '/' ? 'bg-orange-200' : ''}`}
-			on:click={() => redirectPage('')}>Home</button
+			on:click={() => redirectPage('')}>Tasks Store here</button
 		>
 		<button
 			class={`border border-red-950 p-3 ${activePage == '/todos' ? 'bg-orange-200' : ''}`}
