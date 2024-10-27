@@ -72,12 +72,21 @@ export const actions = {
 	// GET is on +page.ts using load function
 
 	// Delete post
+	deletePost: async ({ request }) => {
+		const data = await request.formData();
+
+		const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${data.get('id')}`, {
+			method: 'DELETE'
+		});
+
+		console.info('Response Status: ', response.status);
+	},
 
 	// Edit post
 	editPost: async ({ request }) => {
 		const data = await request.formData();
 
-		const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${1}`, {
+		const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${data.get('id')}`, {
 			method: 'PATCH',
 			body: JSON.stringify({
 				title: data.get('title'),

@@ -4,15 +4,11 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { PageData } from './$types.js';
+	import PostDeleteMonitoring from './components/PostDeleteMonitoring.svelte';
+	import Status from '$lib/constants/status.js';
 
 	export let data: PageData; // The data returned from the universal load function
 	// export let form: ActionData; 👈 only use when you are not using enhance and wants to return the result directly from +page.server.ts
-
-	enum Status {
-		SUCCESSS = 'success',
-		FAILED = 'failure',
-		INITIAL = ''
-	}
 
 	// states
 	let dataState: Status = Status.INITIAL;
@@ -20,6 +16,7 @@
 	let showEditModal: boolean = false;
 	let showDeleteModal: boolean = false;
 	let selectedPost: {
+		id?: number;
 		title: string;
 		body: string;
 	} = {
@@ -28,6 +25,8 @@
 	};
 	let editing: boolean = false;
 	let editingStatus: Status = Status.INITIAL;
+	let deleting: boolean = false;
+	let deleteStatus: Status = Status.INITIAL;
 
 	// enhancements
 	const submitCreatePost: SubmitFunction = ({
@@ -73,6 +72,31 @@
 				editing = false;
 				editingStatus = Status.FAILED;
 				// await update(); 👈 if this is present it will remove value on input field
+			}
+		};
+	};
+
+	const submitDeletePost: SubmitFunction = ({
+		formElement,
+		formData,
+		action,
+		cancel,
+		submitter
+	}) => {
+		deleteStatus = Status.INITIAL;
+		deleting = true;
+
+		return async ({ result, update }) => {
+			console.info('Result type: ', result.type);
+
+			if (result.type === 'success') {
+				deleting = false;
+				deleteStatus = Status.SUCCESSS;
+			}
+
+			if (result.type === 'failure' || result.type === 'error') {
+				deleting = false;
+				deleteStatus = Status.FAILED;
 			}
 		};
 	};
@@ -154,6 +178,7 @@
 									title: '',
 									body: ''
 								};
+								editingStatus = Status.INITIAL;
 							}}>&times;</button
 						>
 
@@ -192,6 +217,7 @@
 									action="?/editPost"
 									use:enhance={submitEditPost}
 								>
+									<inpit type="hidden" name="id" value={selectedPost.id} />
 									<InputField label="title" name="title" value={selectedPost.title} />
 									<InputField label="body" name="body" value={selectedPost.body} type="textarea" />
 
@@ -201,6 +227,17 @@
 						{/if}
 
 						<!-- Delete confirmation form here -->
+						{#if showDeleteModal}
+							<div>Are you sure you want to delete this post?</div>
+
+							<div class="mt-2">
+								<form method="POST" action="?/deletePost" use:enhance={submitDeletePost}>
+									<button class="mt-2 p-2 border border-purple-700">Yes</button>
+								</form>
+
+								<PostDeleteMonitoring {deleting} {deleteStatus} />
+							</div>
+						{/if}
 					</div>
 				</div>
 			{/if}
