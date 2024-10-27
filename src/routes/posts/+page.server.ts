@@ -1,3 +1,4 @@
+import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types.js';
 
 // LOAD
@@ -6,7 +7,7 @@ export const load = async ({ fetch }) => {
 	const response = await fetch('https://jsonplaceholder.typicode.com/posts');
 	const posts = await response.json();
 
-	console.info('REFETCHED');
+	console.info('POSTS ARE FETCHED');
 
 	// Return the fetched data
 	return {
@@ -27,19 +28,32 @@ export const actions = {
 	createPost: async ({ request }) => {
 		const data = await request.formData();
 
-		const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
-			method: 'POST',
-			body: JSON.stringify({
-				title: data.get('title'),
-				body: data.get('body'),
-				userId: 1
-			}),
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8'
-			}
-		});
+		try {
+			const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+				method: 'POST',
+				body: JSON.stringify({
+					title: data.get('title'),
+					body: data.get('body'),
+					userId: 1
+				}),
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8'
+				}
+			});
 
-		console.log('response: ', response.status);
+			console.info('Response Status: ', response.status);
+
+			if (response.status != 201) {
+				return fail(400, {
+					error: 'ERROR'
+				});
+			}
+		} catch (error) {
+			// doesn't work
+			return fail(400, {
+				error: error
+			});
+		}
 
 		/**
 		 *
@@ -53,14 +67,27 @@ export const actions = {
 		// return {
 		// 	success: true
 		// };
+	},
 
-		// GET
-		// getPosts: async () => {
+	// GET is on +page.ts using load function
 
-		// }
+	// Delete post
 
-		// Delete post
+	// Edit post
+	editPost: async ({ request }) => {
+		const data = await request.formData();
 
-		// Edit post
+		const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${1}`, {
+			method: 'PATCH',
+			body: JSON.stringify({
+				title: data.get('title'),
+				body: data.get('body')
+			}),
+			headers: {
+				'Content-type': 'application/json; charset=UTF-8'
+			}
+		});
+
+		console.info('Response Status: ', response.status);
 	}
 } satisfies Actions;
