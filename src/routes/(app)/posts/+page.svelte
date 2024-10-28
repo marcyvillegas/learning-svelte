@@ -3,9 +3,10 @@
 	// import type { ActionData } from './$types.js';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { PageData } from './$types.js';
-	import PostDeleteMonitoring from './components/PostDeleteMonitoring.svelte';
 	import Status from '$lib/constants/status.js';
+	import PostDeleteMonitoring from './components/PostDeleteMonitoring.svelte';
+	import type { PageData } from './$types.js';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData; // The data returned from the universal load function
 	// export let form: ActionData; 👈 only use when you are not using enhance and wants to return the result directly from +page.server.ts
@@ -100,6 +101,10 @@
 			}
 		};
 	};
+
+	const handleRedirectToSpecificPost = (postId: number) => {
+		goto(`post/${postId}`);
+	};
 </script>
 
 <div>
@@ -160,6 +165,10 @@
 							showDeleteModal = true;
 							selectedPost = post;
 						}}>DELETE</button
+					>
+					<button
+						class="p-2 border border-purple-700"
+						on:click={() => handleRedirectToSpecificPost(post.id)}>Go to post</button
 					>
 				</div>
 			{/each}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	import '../../app.css';
 	import Navigation from '$lib/components/Navigation/Navigation.svelte';
 	import { navigating } from '$app/stores';
 	import { writable } from 'svelte/store';
